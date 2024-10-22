@@ -91,7 +91,7 @@ function cloneRepository(repoUrl, cloneDir) {
 }
 
 function main() {
-    const repoUrl = 'https://github.com/qikfox3DViewer/phoenix-firestorm.git';
+    const repoUrl = 'https://github.com/waseem-qikfox/qikfox3D-viewer.git';
     const cloneDir = 'qikfox3D-viewer';
     cloneRepository(repoUrl, cloneDir);
 }
