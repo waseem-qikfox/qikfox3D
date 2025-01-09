@@ -1,0 +1,19 @@
+autobuild_package_name="fmodstudio"
+autobuild_package_version="2.02.20"
+autobuild_package_clean="true"
+autobuild_package_metadata="C:\Users\Waseem\firestorm\3p-fmodstudio\stage\autobuild-package.xml"
+autobuild_package_platform="windows64"
+autobuild_package_filename="C:\Users\Waseem\firestorm\3p-fmodstudio\fmodstudio-2.02.20-windows64-242632149.tar.bz2"
+autobuild_package_md5="900e56c742b340b2d3de0c854138f09d"
+autobuild_package_blake2b="7ca866e8517448219b4c5531b5165f57d26fc6e32d0dfeb0a6f4e62cecb7017ef7c205e3d978e4580a3ed90c7783167dba283f6739558f114665412a626af286"
+autobuild_package_sha1="55f2ea823a7267fe5022481f773d3ac383b037a1"
+autobuild_package_sha256="60e8f87050ced78814c37ee07d101ceae4f5f9aebab205c5ee384ad16e3fc935"
+
+
+# just run the below command to integrate fmod on Windows
+
+autobuild installables edit fmodstudio platform=windows64 hash=900e56c742b340b2d3de0c854138f09d url=file:///Users/Waseem/Desktop/qikfox3D/qikfox3D-resources/fmodstudio-2.02.20-windows64-242632149.tar.bz2
+
+# and then run command
+
+autobuild build -A 64 -c ReleaseFS_open -- --fmodstudio --package --chan nightly -DLL_TESTS:BOOL=FALSE
