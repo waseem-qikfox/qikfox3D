@@ -101,42 +101,33 @@ function replaceBackgroundPng(dir, srcFile) {
 
 function replaceIconIcoBmpFiles(dir, icoSrcFile, bmpSrcFile) {
     const files = fs.readdirSync(dir, { withFileTypes: true });
-    
+
     files.forEach(file => {
         const fullPath = path.join(dir, file.name);
 
         if (file.isDirectory() && !file.name.startsWith('.git')) {
             replaceIconIcoBmpFiles(fullPath, icoSrcFile, bmpSrcFile);
-        } else if (file.isFile() && (
-            file.name === 'firestorm_icon.ico' || 
-            file.name === 'firestorm_256.bmp'
-        )) {
-            if (file.name === 'firestorm_icon.ico') {
-                fs.copyFileSync(icoSrcFile, fullPath);
-            }
-            if (file.name === 'firestorm_256.bmp') {
-                fs.copyFileSync(bmpSrcFile, fullPath);
-            }
+        } else if (file.isFile() && file.name.endsWith('.ico')) {
+            fs.copyFileSync(icoSrcFile, fullPath);
+        } else if (file.isFile() && file.name.endsWith('.bmp')) {
+            fs.copyFileSync(bmpSrcFile, fullPath);
+        } else if (file.isFile() && file.name.endsWith('.BMP')) {
+            fs.copyFileSync(bmpSrcFile, fullPath);
+        } else if (file.isFile() && file.name.endsWith('.ICO')) {
+            fs.copyFileSync(bmpSrcFile, fullPath);
         }
     });
 }
 
 function replaceIconPngFiles(dir, srcFile) {
     const files = fs.readdirSync(dir, { withFileTypes: true });
-    
+
     files.forEach(file => {
         const fullPath = path.join(dir, file.name);
 
         if (file.isDirectory() && !file.name.startsWith('.git')) {
             replaceIconPngFiles(fullPath, srcFile);
-        } else if (file.isFile() && (
-            file.name === 'firestorm_16.png' || 
-            file.name === 'firestorm_32.png' || 
-            file.name === 'firestorm_48.png' || 
-            file.name === 'firestorm_128.png' || 
-            file.name === 'firestorm_256.png' ||
-            file.name === 'firestorm_512.png'
-        )) {
+        } else if (file.isFile() && file.name.endsWith('.png')) {
             fs.copyFileSync(srcFile, fullPath);
         }
     });
@@ -184,6 +175,7 @@ function main() {
     const icoFile = path.join(process.cwd(), 'qikfox3D-resources', 'qikfox3D_ico.ico');
     const bmpFile = path.join(process.cwd(), 'qikfox3D-resources', 'qikfox3D_bmp.bmp');
     const iconsDir = path.join(cloneDir, 'indra', 'newview', 'icons');
+    const installerDirWin = path.join(installerDir, 'windows');
     
     var success = cloneRepository(repoUrl, cloneDir, commitHash);
     if(success === true) {
@@ -194,7 +186,9 @@ function main() {
         replacePngFile(targetPngFile, pngFile);
         replaceBackgroundPng(installerDir, backgroundPng);
         replaceIconPngFiles(iconsDir, iconPngFile);
+        replaceIconPngFiles(installerDirWin, iconPngFile);
         replaceIconIcoBmpFiles(iconsDir, icoFile, bmpFile);
+        replaceIconIcoBmpFiles(installerDirWin, icoFile, bmpFile);
         updateAutobuildXML(cloneDir, resourceDir);
         updateAutobuildHashes(cloneDir);
         console.log("Success!");
